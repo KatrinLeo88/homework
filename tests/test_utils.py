@@ -1,6 +1,8 @@
-import os
 import json
+import os
+
 import pytest
+
 from src.utils import load_json_list
 
 
@@ -16,7 +18,7 @@ def temp_json_file(tmp_path):
     return file_path
 
 
-def test_load_json_list_valid(temp_json_file):
+def test_load_json_list_valid(temp_json_file) -> None:
     result = load_json_list(str(temp_json_file))
     assert isinstance(result, list)
     assert len(result) == 2
@@ -24,19 +26,19 @@ def test_load_json_list_valid(temp_json_file):
     assert result[1]["operationAmount"]["currency"]["code"] == "USD"
 
 
-def test_load_json_list_empty_file(tmp_path):
+def test_load_json_list_empty_file(tmp_path) -> None:
     file_path = tmp_path / "empty.json"
     file_path.write_text("")
     result = load_json_list(str(file_path))
     assert result == []
 
 
-def test_load_json_list_file_not_found():
+def test_load_json_list_file_not_found() -> None:
     result = load_json_list("nonexistent_file.json")
     assert result == []
 
 
-def test_load_real_operations():
+def test_load_real_operations() -> None:
     result = load_json_list("data/operations.json")
     assert isinstance(result, list)
     assert all(isinstance(txn, dict) for txn in result)

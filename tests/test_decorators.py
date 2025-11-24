@@ -1,7 +1,8 @@
 from pathlib import Path
+from typing import NoReturn
 
 import pytest
-from typing import NoReturn
+
 from src.decorators import log
 
 
