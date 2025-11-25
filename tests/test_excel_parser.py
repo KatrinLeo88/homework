@@ -1,5 +1,6 @@
 import os
 import tempfile
+
 import pandas as pd
 import pytest
 
@@ -21,7 +22,7 @@ TEST_DATA = [
 
 
 @pytest.fixture
-def csv_file():
+def csv_file() -> None:
     with tempfile.NamedTemporaryFile(mode="w+", suffix=".csv", newline="", delete=False) as f:
         df = pd.DataFrame(TEST_DATA)
         df.to_csv(f.name, sep=";", index=False)
@@ -30,7 +31,7 @@ def csv_file():
 
 
 @pytest.fixture
-def excel_file():
+def excel_file() -> None:
     with tempfile.NamedTemporaryFile(suffix=".xlsx", delete=False) as f:
         df = pd.DataFrame(TEST_DATA)
         df.to_excel(f.name, index=False)
@@ -38,7 +39,7 @@ def excel_file():
     os.remove(f.name)
 
 
-def test_read_csv_transactions(csv_file):
+def test_read_csv_transactions(csv_file) -> None:
     result = parse_csv(csv_file)
 
     assert isinstance(result, list)
@@ -47,7 +48,7 @@ def test_read_csv_transactions(csv_file):
     assert result[0]["description"] == "Test transaction"
 
 
-def test_read_excel_transactions(excel_file):
+def test_read_excel_transactions(excel_file) -> None:
     result = parse_excel(excel_file)
     assert isinstance(result, list)
     assert result[0]["id"] == 1

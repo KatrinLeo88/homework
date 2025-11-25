@@ -1,7 +1,5 @@
 import pandas as pd
 
-from tests.test_generators import transactions
-
 
 def parse_csv(path: str) -> list[dict]:
     """функция читает csv фаил и возвращает список транзакции"""
